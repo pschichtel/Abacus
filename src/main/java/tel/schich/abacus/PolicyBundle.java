@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import tel.schich.abacus.action.Action;
 import tel.schich.abacus.context.ContextBundle;
@@ -27,7 +28,9 @@ public class PolicyBundle {
     }
 
     public List<Decision> lookup(Action action) {
-        return this.decisionMap.getOrDefault(action.name(), emptyList());
+        return this.decisionMap.getOrDefault(action.name(), emptyList()).stream()
+                .filter(action::accepts)
+                .collect(Collectors.toList());
     }
 
     public static PolicyDefinitionBuilder define(Matcher matcher) {

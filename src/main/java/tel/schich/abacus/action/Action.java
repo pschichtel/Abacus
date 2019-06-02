@@ -1,6 +1,7 @@
 package tel.schich.abacus.action;
 
 import tel.schich.abacus.context.Context;
+import tel.schich.abacus.decision.Decision;
 
 public interface Action extends Context {
 
@@ -10,4 +11,6 @@ public interface Action extends Context {
     default String contextType() {
         return "action";
     }
+
+    boolean accepts(Decision decision);
 }

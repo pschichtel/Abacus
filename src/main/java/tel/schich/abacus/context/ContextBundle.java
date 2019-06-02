@@ -48,11 +48,22 @@ public class ContextBundle {
             this.attributes = new HashMap<>();
         }
 
-        public ContextBundleBuilder with(Context context) {
-            String typeName = context.contextType();
-            Map<String, String> attributes = context.contextAttributes();
+        public ContextBundleBuilder with(Context... contexts) {
+            for (Context context : contexts) {
+                String typeName = context.contextType();
+                Map<String, String> attributes = context.contextAttributes();
 
-            return with(typeName, attributes);
+                with(typeName, attributes);
+            }
+            return this;
+        }
+
+        public ContextBundleBuilder with(ContextBundle other) {
+            other.attributes.forEach((key, otherMap) -> {
+                Map<String, Set<String>> map = this.attributes.computeIfAbsent(key.toLowerCase(), k -> new HashMap<>());
+                otherMap.forEach((name, values) -> map.computeIfAbsent(name.toLowerCase(), n -> new HashSet<>()).addAll(values));
+            });
+            return this;
         }
 
         public <T> ContextBundleBuilder with(T obj, ContextExtractor<T> extractor) {
