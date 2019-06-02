@@ -21,9 +21,19 @@ public class UncachedPolicyEvaluator implements PolicyEvaluator {
         this.defintions = new ArrayList<>();
     }
 
-    public void addPolicies(PolicyBundle bundle) {
+    public UncachedPolicyEvaluator addPolicies(PolicyBundle bundle) {
         this.defintions.add(bundle);
+        return this;
     }
+
+
+    //        role[name=Admin] {
+    //            cubeengine.world.delete.world: deny;
+    //            cubeengine.world.delete: grant;
+    //            cubeengine.world.delete: "meta";
+    //            cubeengine.world.delete: grant;
+    //            cubeengine.world.delete: "grant";
+    //        }
 
     @Override
     public Decision decide(Subject subject, Resource resource, Action action, ContextBundle context) {
