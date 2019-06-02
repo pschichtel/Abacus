@@ -1,4 +1,4 @@
-package tel.schich.abacus.example.domain;
+package tel.schich.abacus.example;
 
 import tel.schich.abacus.context.Context;
 
